@@ -20,15 +20,14 @@ jobs:
       - run:
         name: "echo an env var that is part of our project"
         command: |
-          echo "Hello my name is $name"
+          echo $name
 workflows:
   # Name the workflow "welcome"
   welcome:
     # Run the welcome/run job in its own container
     jobs:
+      - my_name
       - print_hello
       - print_world:
           requires:
             - print_hello
-      - my_name
-
