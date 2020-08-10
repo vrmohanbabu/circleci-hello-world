@@ -5,6 +5,12 @@ workflows:
   test-env-vars:
     jobs:
       - build
+  welcome:
+    jobs:
+      - print_hello
+      - print_world:
+          requires:
+            - print_hello
 
 jobs:
   build:
@@ -16,3 +22,13 @@ jobs:
           name: "echo an env var that is part of our project"
           command: |
             echo $name # this env var must be swt within the project
+  print_hello:
+    docker: 
+      - image: circleci/node:13.8.0
+    steps:
+      - run: echo "hello"
+  print_world: 
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - run: echo "world"
