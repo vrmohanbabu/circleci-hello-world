@@ -1,34 +1,47 @@
 # Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
+defaults: &defaults
+  docker:
+    - image: circleci/node:13.8.0
+
+commands:
+  print_pipeline_id:
+    description: "Prints the CircleCi workflow id"
+    steps:
+      - run: echo ${CIRCLE_WORKFLOW_ID}
+
 workflows:
-  test-env-vars:
+  save_output:
     jobs:
-      - build
-  welcome:
-    jobs:
-      - print_hello
-      - print_world:
+      - save_hello_world_output
+      - print_output_file:
           requires:
-            - print_hello
+            - save_hello_world_output
+  
+  reuse_command:
+    jobs:
+      - command_reuse_demo
 
 jobs:
-  build:
-    docker:
-      - image: cimg/base:2020.01
+  save_hello_world_output:
+    <<: *defaults
     steps:
-      - checkout
-      - run: 
-          name: "echo an env var that is part of our project"
-          command: |
-            echo $name # this env var must be swt within the project
-  print_hello:
-    docker: 
-      - image: circleci/node:13.8.0
+      - run: echo "Hello World!" > ~/output.txt
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - output.txt
+            
+  print_output_file:
+    <<: *defaults
     steps:
-      - run: echo "hello"
-  print_world: 
-    docker:
-      - image: circleci/node:13.8.0
+      - attach_workspace:
+          at: ~/
+      - run: cat ~/output.txt
+      
+  command_reuse_demo:
+    <<: *defaults
     steps:
-      - run: echo "world"
+      - print_pipeline_id
+          
