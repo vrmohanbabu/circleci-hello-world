@@ -22,6 +22,10 @@ workflows:
   reuse_command:
     jobs:
       - command_reuse_demo
+  
+  failing_when:
+    jobs:
+      - failing_when
 
 jobs:
   save_hello_world_output:
@@ -44,4 +48,12 @@ jobs:
     <<: *defaults
     steps:
       - print_pipeline_id
-          
+  
+  Failing_job:
+    <<: *defaults
+    steps:
+      - run: return 1
+      - run: 
+          name: on error
+          command: echo "Hello Error!"
+          when: on_fail
