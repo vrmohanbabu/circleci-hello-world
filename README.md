@@ -6,7 +6,7 @@ Simple hello world with CircleCI pipeline with an env var.
 
 ## Setup the Enviroment
 
-* Clone the GitHub repo and checkout to the circleci-project-setup branch.
+* Fork this repository and checkout to the circleci-project-setup branch.
 
 ## Setup the CircleCI
 
