@@ -49,7 +49,7 @@ jobs:
     steps:
       - print_pipeline_id
   
-  Failing_job:
+  failing_job:
     <<: *defaults
     steps:
       - run: return 1
