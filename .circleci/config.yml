@@ -5,50 +5,12 @@ defaults: &defaults
   docker:
     - image: circleci/node:13.8.0
 
-commands:
-  print_pipeline_id:
-    description: "Prints the CircleCi workflow id"
-    steps:
-      - run: echo ${CIRCLE_WORKFLOW_ID}
-
 workflows:
-  save_output:
-    jobs:
-      - save_hello_world_output
-      - print_output_file:
-          requires:
-            - save_hello_world_output
-  
-  reuse_command:
-    jobs:
-      - command_reuse_demo
-  
   failing_when:
     jobs:
       - failing_job
 
 jobs:
-  save_hello_world_output:
-    <<: *defaults
-    steps:
-      - run: echo "Hello World!" > ~/output.txt
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - output.txt
-            
-  print_output_file:
-    <<: *defaults
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run: cat ~/output.txt
-      
-  command_reuse_demo:
-    <<: *defaults
-    steps:
-      - print_pipeline_id
-  
   failing_job:
     <<: *defaults
     steps:
