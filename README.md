@@ -7,6 +7,7 @@ Learning about the basic concepts used in CircleCI.
 ## Setup the Enviroment
 
 * Fork this repository.
+* AWS account with IAM role created with cloudformation and ec2 policy.
 
 ## Setup the CircleCI:
 
@@ -20,6 +21,10 @@ Learning about the basic concepts used in CircleCI.
 * In the [CircleCI](https://app.circleci.com/) application, go to your project’s settings by clicking the gear icon on the Pipelines page, or the three dots on other pages in the application.
 * Click on Environment Variables.
 * Add new variables by clicking the Add Variable button and enter a name as "name" and value.
+* Add AWS IAM user access and secret Keys in CircleCI environment.
+  * AWS_ACCESS_KEY_ID
+  * AWS_SECRET_ACCESS_KEY
+  * AWS_DEFAULT_REGION
 
 ### tags:
 
